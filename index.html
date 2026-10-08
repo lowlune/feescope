@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reseller Fee &amp; Profit Calculator — Etsy, eBay &amp; Amazon FBA | FeeScope</title>
+<meta name="description" content="Free reseller fee calculator. Estimate Etsy, eBay and Amazon FBA fees, net proceeds, profit, margin, ROI and break-even price. No signup, runs in your browser.">
+<link rel="canonical" href="https://lowlune.github.io/feescope/">
+<meta property="og:title" content="Reseller Fee &amp; Profit Calculator — FeeScope">
+<meta property="og:description" content="Estimate Etsy, eBay and Amazon FBA fees, profit, margin and break-even price for any product.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lowlune.github.io/feescope/">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"FeeScope Reseller Fee Calculator",
+"applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How much does Etsy take per sale?","acceptedAnswer":{"@type":"Answer","text":"Etsy generally charges a $0.20 listing fee, a 6.5% transaction fee on the item price plus shipping charged, and payment processing of roughly 3% + $0.25 per order in the US. Offsite ads can add 12–15% on attributed orders. Rates vary by country and plan, so verify in your Etsy account."}},
+{"@type":"Question","name":"What is eBay's final value fee?","acceptedAnswer":{"@type":"Answer","text":"For many categories eBay's final value fee is about 13.25% of the item price plus shipping, with a fixed $0.30 per-order fee. The exact rate depends on the category, seller level and store subscription."}},
+{"@type":"Question","name":"How much does Amazon FBA cost per unit?","acceptedAnswer":{"@type":"Answer","text":"Amazon FBA typically charges a 15% referral fee on the total sales price (minimum about $0.30 per item), a per-unit fulfillment fee that depends on size and weight, and a per-unit monthly storage fee. Use the calculator to plug in your exact numbers."}},
+{"@type":"Question","name":"How do I calculate break-even price?","acceptedAnswer":{"@type":"Answer","text":"Break-even price is the sale price at which profit is exactly zero after all marketplace fees, item cost and shipping. Because percentage fees depend on the price, FeeScope solves for it numerically and shows it in the results."}}]}
+</script>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="brand">Fee<b>Scope</b></div>
+    <nav>
+      <a href="#calculator">Calculator</a>
+      <a href="#how">How it works</a>
+      <a href="#fees">Fee reference</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pro" data-gumroad>Pro batch tool</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <span class="badge">100% free · no signup · runs in your browser</span>
+    <h1>Reseller Fee &amp; Profit Calculator</h1>
+    <p>See exactly what a marketplace takes and what you keep. Itemized fees, net proceeds, profit, margin, ROI and break-even price for Etsy, eBay, Amazon FBA or any custom platform.</p>
+  </section>
+
+  <div class="app" id="calculator">
+    <form class="panel" onsubmit="return false" autocomplete="off">
+      <h2>Sale inputs</h2>
+      <fieldset>
+        <legend>Marketplace</legend>
+        <div class="field">
+          <label for="marketplace">Platform</label>
+          <div class="in">
+            <select id="marketplace">
+              <option value="etsy" selected>Etsy</option>
+              <option value="ebay">eBay</option>
+              <option value="amazon">Amazon FBA</option>
+              <option value="custom">Custom / other</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>The item</legend>
+        <div class="field"><label for="salePrice">Sale price</label><div class="in">$<input id="salePrice" type="number" value="25" step="0.01" min="0"></div></div>
+        <div class="field"><label for="itemCost">Item cost (COGS)</label><div class="in">$<input id="itemCost" type="number" value="8" step="0.01" min="0"></div></div>
+        <div class="field"><label for="shippingCharged">Shipping charged</label><div class="in">$<input id="shippingCharged" type="number" value="0" step="0.01" min="0"></div></div>
+        <div class="field"><label for="shippingCost">Actual shipping cost</label><div class="in">$<input id="shippingCost" type="number" value="4" step="0.01" min="0"></div></div>
+        <div class="field"><label for="quantity">Quantity (units)</label><div class="in"><input id="quantity" type="number" value="1" step="1" min="0"></div></div>
+      </fieldset>
+      <fieldset>
+        <legend>Marketplace fees</legend>
+        <div id="configFields"></div>
+        <p class="note" id="configNote"></p>
+      </fieldset>
+      <fieldset>
+        <legend>Optional</legend>
+        <div class="field"><label for="adRate">Ad / offsite ad rate</label><div class="in"><input id="adRate" type="number" value="0" step="0.1" min="0"><span class="unit">%</span></div></div>
+        <div class="field"><label for="taxRate">Income tax on profit</label><div class="in"><input id="taxRate" type="number" value="0" step="1" min="0" max="100"><span class="unit">%</span></div></div>
+      </fieldset>
+      <div class="share-row">
+        <button class="btn ghost" type="button" id="reset">Reset</button>
+        <button class="btn ghost" type="button" id="csv">Download CSV</button>
+        <button class="btn ghost" type="button" id="share">Copy share link</button>
+      </div>
+    </form>
+
+    <div class="panel">
+      <h2>Results</h2>
+      <div class="metrics" id="metrics"></div>
+      <canvas id="chart" aria-label="Revenue breakdown chart"></canvas>
+      <div class="legend" id="legend"></div>
+      <div id="feesTable"></div>
+      <div id="perUnit"></div>
+      <p class="tips"><b>Tip:</b> percentage fees are charged on the item + shipping you charge the buyer, so raising shipping usually costs you more in fees than it recovers.</p>
+    </div>
+  </div>
+
+  <section class="cta" id="pro">
+    <div>
+      <h3>Pricing lots of products?</h3>
+      <p>FeeScope Pro is an offline batch console for sellers: import a CSV of products, apply marketplace fee rules in bulk, compare profit across Etsy / eBay / Amazon, get break-even pricing suggestions and export a clean profit sheet.</p>
+    </div>
+    <a class="btn" href="#pro" data-gumroad>Get FeeScope Pro →</a>
+  </section>
+
+  <section class="content">
+    <h2 id="how">How the numbers are calculated</h2>
+    <div class="grid2">
+      <div>
+        <h3>Fee types</h3>
+        <p>Most marketplaces charge a <strong>percentage fee</strong> on the item price (often including shipping charged), plus <strong>fixed per-order fees</strong> for payment processing or listing. Amazon FBA also charges per-unit fulfillment and storage. FeeScope itemizes every one so you can see where the money goes.</p>
+        <h3>Net proceeds vs. profit</h3>
+        <p><strong>Net proceeds</strong> = what you receive after marketplace fees. <strong>Profit</strong> = net proceeds minus your item cost and actual shipping cost. A sale can have positive net proceeds but still lose money once your costs are counted.</p>
+      </div>
+      <div>
+        <h3>Margin &amp; ROI</h3>
+        <p><strong>Margin</strong> is profit ÷ revenue. <strong>ROI on item cost</strong> is profit ÷ item cost — useful for comparing products that cost different amounts to source.</p>
+        <h3>Break-even price</h3>
+        <p>The per-unit sale price at which profit is exactly zero, holding all other inputs fixed. Because percentage fees depend on the price, this is solved numerically. List below it and you lose money on every sale.</p>
+      </div>
+    </div>
+
+    <h2 id="fees">Fee reference (approximate U.S. defaults)</h2>
+    <p class="note">These are the values FeeScope starts with. They are approximations for 2026 and change often — edit them in the calculator and confirm with the marketplace.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Marketplace</th><th>Percentage fee</th><th>Fixed fees</th><th>Other</th></tr></thead>
+        <tbody>
+          <tr><td>Etsy</td><td>6.5% transaction + ~3% processing</td><td>$0.20 listing, $0.25 processing</td><td>Offsite ads 12–15% when attributed</td></tr>
+          <tr><td>eBay</td><td>~13.25% final value fee</td><td>$0.30 per order</td><td>Optional store subscription</td></tr>
+          <tr><td>Amazon FBA</td><td>15% referral</td><td>$0.30 referral minimum</td><td>Per-unit fulfillment + storage</td></tr>
+          <tr><td>Custom</td><td>Your rate</td><td>Your fixed fee</td><td>Any other processor/platform</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How to price a product for profit</h2>
+    <ol>
+      <li><strong>Enter your true costs.</strong> Item cost, actual shipping, packaging and any ad spend are easy to forget but decide whether you make money.</li>
+      <li><strong>Use the real fee schedule.</strong> Adjust the rates to your category and account — Etsy's processing rate, eBay's category rate and FBA size tier all change the math.</li>
+      <li><strong>Check break-even first.</strong> If your intended price is below break-even, no volume will save the listing.</li>
+      <li><strong>Set a target margin.</strong> Work backwards from the margin you need, not just what competitors charge.</li>
+      <li><strong>Re-check when fees change.</strong> Marketplace fees update regularly; a product that was profitable last year may not be now.</li>
+    </ol>
+
+    <h2 id="faq">Frequently asked questions</h2>
+    <details><summary>How much does Etsy take per sale?</summary><p>Etsy generally charges a $0.20 listing fee, a 6.5% transaction fee on the item price plus shipping charged, and payment processing of roughly 3% + $0.25 per order in the US. Offsite ads can add 12–15% on attributed orders. Rates vary by country and plan, so verify in your Etsy account.</p></details>
+    <details><summary>What is eBay's final value fee?</summary><p>For many categories eBay's final value fee is about 13.25% of the item price plus shipping, with a fixed $0.30 per-order fee. The exact rate depends on the category, seller level and store subscription.</p></details>
+    <details><summary>How much does Amazon FBA cost per unit?</summary><p>Amazon FBA typically charges a 15% referral fee on the total sales price (minimum about $0.30 per item), a per-unit fulfillment fee that depends on size and weight, and a per-unit monthly storage fee. Plug your exact size tier into the calculator.</p></details>
+    <details><summary>How do I calculate break-even price?</summary><p>Break-even price is the sale price at which profit is exactly zero after all fees, item cost and shipping. Because percentage fees depend on the price, FeeScope solves it numerically and shows it in the results.</p></details>
+    <details><summary>Is my data stored anywhere?</summary><p>No. Everything runs in your browser. Nothing is uploaded, and your inputs only live in the page URL if you copy a share link.</p></details>
+
+    <div class="disclaimer"><strong>Disclaimer:</strong> FeeScope is an educational estimation tool, not financial, tax or accounting advice. Marketplace fee schedules change frequently and vary by country, category, seller plan and buyer location. The rates shown are approximations — always verify current fees with the marketplace and consult a professional for tax matters.</div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="yr"></span> FeeScope · <a href="#calculator">Reseller fee &amp; profit calculator</a> · <a href="#pro" data-gumroad>Pro batch tool</a></p>
+  </div>
+</footer>
+<script type="module" src="app.js"></script>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

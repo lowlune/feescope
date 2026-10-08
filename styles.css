@@ -1,0 +1,82 @@
+:root{
+  --bg:#0b1220; --panel:#131c2e; --panel2:#1b2740; --line:#26324a;
+  --text:#e8eef8; --muted:#93a2bd; --accent:#3ddc97; --accent2:#4aa8ff;
+  --danger:#ff6b6b; --warn:#ffcf5c; --radius:14px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 80% -10%,#16233c 0%,var(--bg) 55%);color:var(--text);font-family:var(--font);line-height:1.55}
+a{color:var(--accent2);text-decoration:none}
+a:hover{text-decoration:underline}
+header{position:sticky;top:0;z-index:20;background:rgba(11,18,32,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-weight:800;font-size:19px;letter-spacing:-.3px;color:var(--text)}
+.brand b{color:var(--accent)}
+.nav nav a{margin-left:18px;color:var(--muted);font-size:14px}
+.nav nav a:hover{color:var(--text);text-decoration:none}
+.hero{padding:44px 0 12px}
+.hero h1{font-size:clamp(28px,4.6vw,46px);margin:0 0 8px;letter-spacing:-1px}
+.hero p{color:var(--muted);max-width:680px;margin:0;font-size:17px}
+.badge{display:inline-block;background:rgba(61,220,151,.12);color:var(--accent);border:1px solid rgba(61,220,151,.3);padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-bottom:14px}
+.app{display:grid;grid-template-columns:360px 1fr;gap:20px;margin:26px 0}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.panel h2{margin:0 0 12px;font-size:15px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+fieldset{border:0;padding:0;margin:0 0 14px}
+fieldset legend{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--accent2);padding:0 0 6px}
+.field{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.field label{font-size:13.5px;color:var(--text).85}
+.field .in{display:flex;align-items:center;gap:4px}
+.field input[type=number]{width:110px;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:7px 9px;font-size:14px;text-align:right}
+.field input[type=number]:focus{outline:2px solid var(--accent2);outline-offset:1px;border-color:var(--accent2)}
+.field .unit{color:var(--muted);font-size:12px;width:14px}
+.field select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:7px 9px;font-size:14px;min-width:150px}
+.field select:focus{outline:2px solid var(--accent2);outline-offset:1px;border-color:var(--accent2)}
+.btn{display:inline-block;background:linear-gradient(180deg,#3ddc97,#28b579);color:#04170e;font-weight:700;border:0;border-radius:10px;padding:11px 16px;font-size:14px;cursor:pointer}
+.btn:hover{filter:brightness(1.06);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:600}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+@media(max-width:640px){.metrics{grid-template-columns:repeat(2,1fr)}}
+.metric{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.metric .k{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.metric .v{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-top:2px}
+.metric .v.pos{color:var(--accent)}
+.metric .v.neg{color:var(--danger)}
+.metric .sub{font-size:11.5px;color:var(--muted)}
+canvas{width:100%;height:230px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:14px}
+th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+.tbl-wrap{overflow-x:auto}
+.cta{margin:30px 0;background:linear-gradient(135deg,rgba(74,168,255,.14),rgba(61,220,151,.12));border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cta h3{margin:0 0 6px;font-size:20px}
+.cta p{margin:0;color:var(--muted);max-width:560px;font-size:14.5px}
+.content{margin:40px 0}
+.content h2{font-size:24px;margin:34px 0 10px;letter-spacing:-.4px}
+.content h3{font-size:17px;margin:22px 0 6px}
+.content p,.content li{color:#c6d2e6}
+.content code{background:var(--panel2);padding:2px 6px;border-radius:6px;font-size:13px}
+details{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;background:var(--panel)}
+summary{cursor:pointer;font-weight:600}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;color:var(--muted);font-size:13px}
+.disclaimer{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--muted)}
+.share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.note{font-size:12px;color:var(--muted);margin:2px 0 10px}
+.hidden{display:none}
+.bar{display:flex;height:26px;border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:6px 0 14px;background:var(--panel2)}
+.bar span{display:block;height:100%}
+.bar .seg-profit{background:var(--accent)}
+.bar .seg-fees{background:var(--warn)}
+.bar .seg-cogs{background:#7a8bb0}
+.bar .seg-ship{background:#4aa8ff}
+.bar .seg-loss{background:var(--danger)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.tips{font-size:12.5px;color:var(--muted);margin-top:10px}
+.tips b{color:var(--text)}

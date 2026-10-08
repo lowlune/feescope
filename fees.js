@@ -232,11 +232,13 @@ function solveBreakEven(i) {
  * Compute the full fee/profit breakdown for a sale or batch.
  * @param {object} input  salePrice, shippingCharged, shippingCost, itemCost,
  *                        quantity, marketplace, adRate, taxRate, config
+ * @param {object} [opts] solveBreakEven=false skips the numeric solve (faster for
+ *                        batch work; breakEvenPrice is null). Defaults to true.
  * @returns {object} itemized fees, totals, profit, margin, ROI, break-even, per-unit.
  */
-export function computeFees(input) {
+export function computeFees(input, opts = {}) {
   const i = normalize(input);
   const r = core(i);
-  r.breakEvenPrice = solveBreakEven(i);
+  r.breakEvenPrice = opts.solveBreakEven === false ? null : solveBreakEven(i);
   return r;
 }

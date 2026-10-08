@@ -18,6 +18,14 @@
 //  • Amazon FBA: 15% referral fee on the total sales price (with a $0.30 per-item
 //              minimum for most categories); a per-unit FBA fulfillment fee and a
 //              per-unit storage fee. Both vary by size, weight and season.
+//  • Poshmark: 20% commission on sales of $15 or more, or a flat $2.95 on sales
+//              under $15. Commission is charged on the item sale price; the buyer
+//              pays shipping separately, so shipping is not part of the base.
+//  • Depop:    10% selling fee on item + shipping charged, plus payment processing
+//              of roughly 3.3% + $0.45 per order for U.S. Depop Payments.
+//  • Shopify:  payment processing of roughly 2.9% + $0.30 per online order (Basic
+//              plan, U.S., Shopify Payments). If you use a third-party gateway
+//              instead, add that plan's fee (0.5–2%) as the third-party rate.
 //  • Custom:   any percentage + fixed fee, for other marketplaces or processors.
 //
 // SIMPLIFICATIONS (documented so the output is honest):
@@ -58,6 +66,33 @@ export const MARKETPLACES = {
       referralMin: 0.30,
       fulfillmentPerUnit: 3.50,
       storagePerUnit: 0.10,
+    },
+  },
+  poshmark: {
+    id: 'poshmark',
+    label: 'Poshmark',
+    config: {
+      commissionPct: 20,
+      commissionFlat: 2.95,
+      commissionThreshold: 15,
+    },
+  },
+  depop: {
+    id: 'depop',
+    label: 'Depop',
+    config: {
+      sellingPct: 10,
+      paymentPct: 3.3,
+      paymentFixed: 0.45,
+    },
+  },
+  shopify: {
+    id: 'shopify',
+    label: 'Shopify',
+    config: {
+      processingPct: 2.9,
+      processingFixed: 0.30,
+      thirdPartyPct: 0,
     },
   },
   custom: {
@@ -151,6 +186,34 @@ function core(i) {
         `$${c.fulfillmentPerUnit.toFixed(2)} per unit`);
       add('storageFee', 'FBA storage', c.storagePerUnit * q,
         `$${c.storagePerUnit.toFixed(2)} per unit`);
+      break;
+    }
+    case 'poshmark': {
+      // Commission is per item sale price only (the buyer pays shipping).
+      const small = i.salePrice < c.commissionThreshold;
+      const perItem = small ? c.commissionFlat : c.commissionPct / 100 * i.salePrice;
+      add('commission', 'Poshmark commission', perItem * q,
+        small
+          ? `flat $${c.commissionFlat.toFixed(2)} on sales under $${c.commissionThreshold.toFixed(2)}`
+          : `${c.commissionPct}% of item sale price`);
+      break;
+    }
+    case 'depop': {
+      add('sellingFee', 'Selling fee', c.sellingPct / 100 * grossRevenue,
+        `${c.sellingPct}% of item + shipping`);
+      add('paymentProcessing', 'Payment processing',
+        c.paymentPct / 100 * grossRevenue + c.paymentFixed * q,
+        `${c.paymentPct}% + $${c.paymentFixed.toFixed(2)} per order`);
+      break;
+    }
+    case 'shopify': {
+      add('processingFee', 'Payment processing',
+        c.processingPct / 100 * grossRevenue + c.processingFixed * q,
+        `${c.processingPct}% + $${c.processingFixed.toFixed(2)} per order`);
+      if (c.thirdPartyPct > 0) {
+        add('thirdPartyFee', 'Third-party gateway fee', c.thirdPartyPct / 100 * grossRevenue,
+          `${c.thirdPartyPct}% of item + shipping (non-Shopify Payments)`);
+      }
       break;
     }
     default: {

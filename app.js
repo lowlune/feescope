@@ -27,6 +27,21 @@ const CONFIG_FIELDS = {
     { key: 'fulfillmentPerUnit', label: 'FBA fulfillment / unit', unit: '$', step: 0.01 },
     { key: 'storagePerUnit', label: 'FBA storage / unit', unit: '$', step: 0.01 },
   ],
+  poshmark: [
+    { key: 'commissionPct', label: 'Commission', unit: '%', step: 0.1 },
+    { key: 'commissionFlat', label: 'Flat fee (under threshold)', unit: '$', step: 0.01 },
+    { key: 'commissionThreshold', label: 'Flat-fee threshold', unit: '$', step: 0.5 },
+  ],
+  depop: [
+    { key: 'sellingPct', label: 'Selling fee', unit: '%', step: 0.1 },
+    { key: 'paymentPct', label: 'Payment processing', unit: '%', step: 0.1 },
+    { key: 'paymentFixed', label: 'Processing fixed / order', unit: '$', step: 0.01 },
+  ],
+  shopify: [
+    { key: 'processingPct', label: 'Payment processing', unit: '%', step: 0.1 },
+    { key: 'processingFixed', label: 'Processing fixed / order', unit: '$', step: 0.01 },
+    { key: 'thirdPartyPct', label: 'Third-party gateway fee', unit: '%', step: 0.1 },
+  ],
   custom: [
     { key: 'customPct', label: 'Percentage fee', unit: '%', step: 0.1 },
     { key: 'customFixed', label: 'Fixed fee / order', unit: '$', step: 0.01 },

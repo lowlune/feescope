@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Reseller Fee &amp; Profit Calculator — Etsy, eBay &amp; Amazon FBA | FeeScope</title>
-<meta name="description" content="Free reseller fee calculator. Estimate Etsy, eBay and Amazon FBA fees, net proceeds, profit, margin, ROI and break-even price. No signup, runs in your browser.">
+<meta name="description" content="Free reseller fee calculator. Estimate Etsy, eBay, Amazon FBA, Poshmark, Depop and Shopify fees, net proceeds, profit, margin, ROI and break-even price. No signup, runs in your browser.">
 <link rel="canonical" href="https://lowlune.github.io/feescope/">
 <meta property="og:title" content="Reseller Fee &amp; Profit Calculator — FeeScope">
-<meta property="og:description" content="Estimate Etsy, eBay and Amazon FBA fees, profit, margin and break-even price for any product.">
+<meta property="og:description" content="Estimate Etsy, eBay, Amazon FBA, Poshmark, Depop and Shopify fees, profit, margin and break-even price for any product.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lowlune.github.io/feescope/">
 <meta property="og:site_name" content="FeeScope">
 <meta property="og:image" content="https://lowlune.github.io/feescope/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FeeScope — free reseller fee and profit calculator for Etsy, eBay and Amazon FBA">
+<meta property="og:image:alt" content="FeeScope — free reseller fee and profit calculator for Etsy, eBay, Amazon FBA, Poshmark, Depop and Shopify">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Reseller Fee &amp; Profit Calculator — FeeScope">
-<meta name="twitter:description" content="Estimate Etsy, eBay and Amazon FBA fees, profit, margin and break-even price for any product.">
+<meta name="twitter:description" content="Estimate Etsy, eBay, Amazon FBA, Poshmark, Depop and Shopify fees, profit, margin and break-even price for any product.">
 <meta name="twitter:image" content="https://lowlune.github.io/feescope/og.png">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
@@ -25,7 +25,7 @@
 "url":"https://lowlune.github.io/feescope/",
 "applicationCategory":"BusinessApplication","operatingSystem":"Web",
 "isAccessibleForFree":true,
-"featureList":["Itemized marketplace fees","Net proceeds","Profit and margin","ROI on item cost","Break-even price","Etsy, eBay and Amazon FBA presets","CSV export"],
+"featureList":["Itemized marketplace fees","Net proceeds","Profit and margin","ROI on item cost","Break-even price","Etsy, eBay, Amazon FBA, Poshmark, Depop and Shopify presets","CSV export"],
 "author":{"@type":"Organization","name":"FeeScope"},
 "sameAs":"https://github.com/lowlune/feescope",
 "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
@@ -35,7 +35,10 @@
 {"@type":"Question","name":"How much does Etsy take per sale?","acceptedAnswer":{"@type":"Answer","text":"Etsy generally charges a $0.20 listing fee, a 6.5% transaction fee on the item price plus shipping charged, and payment processing of roughly 3% + $0.25 per order in the US. Offsite ads can add 12–15% on attributed orders. Rates vary by country and plan, so verify in your Etsy account."}},
 {"@type":"Question","name":"What is eBay's final value fee?","acceptedAnswer":{"@type":"Answer","text":"For many categories eBay's final value fee is about 13.25% of the item price plus shipping, with a fixed $0.30 per-order fee. The exact rate depends on the category, seller level and store subscription."}},
 {"@type":"Question","name":"How much does Amazon FBA cost per unit?","acceptedAnswer":{"@type":"Answer","text":"Amazon FBA typically charges a 15% referral fee on the total sales price (minimum about $0.30 per item), a per-unit fulfillment fee that depends on size and weight, and a per-unit monthly storage fee. Use the calculator to plug in your exact numbers."}},
-{"@type":"Question","name":"How do I calculate break-even price?","acceptedAnswer":{"@type":"Answer","text":"Break-even price is the sale price at which profit is exactly zero after all marketplace fees, item cost and shipping. Because percentage fees depend on the price, FeeScope solves for it numerically and shows it in the results."}}]}
+{"@type":"Question","name":"How do I calculate break-even price?","acceptedAnswer":{"@type":"Answer","text":"Break-even price is the sale price at which profit is exactly zero after all marketplace fees, item cost and shipping. Because percentage fees depend on the price, FeeScope solves for it numerically and shows it in the results."}},
+{"@type":"Question","name":"How much does Poshmark take per sale?","acceptedAnswer":{"@type":"Answer","text":"Poshmark charges a 20% commission on sales of $15 or more, and a flat $2.95 on sales under $15. The commission is based on the item sale price; shipping is paid by the buyer."}},
+{"@type":"Question","name":"What are Depop's selling fees?","acceptedAnswer":{"@type":"Answer","text":"Depop's U.S. selling fee is about 10% of the item price plus shipping charged, with payment processing of roughly 3.3% + $0.45 per order. Rates and payment providers vary by country."}},
+{"@type":"Question","name":"What fees does Shopify charge on a sale?","acceptedAnswer":{"@type":"Answer","text":"Shopify itself does not take a cut of each sale, but payment processing on the Basic plan is roughly 2.9% + $0.30 per online order with Shopify Payments. If you use a third-party gateway, add your plan's third-party transaction fee (0.5–2%)."}}]}
 </script>
 </head>
 <body>
@@ -56,7 +59,7 @@
   <section class="hero">
     <span class="badge">100% free · no signup · runs in your browser</span>
     <h1>Reseller Fee &amp; Profit Calculator</h1>
-    <p>See exactly what a marketplace takes and what you keep. Itemized fees, net proceeds, profit, margin, ROI and break-even price for Etsy, eBay, Amazon FBA or any custom platform.</p>
+    <p>See exactly what a marketplace takes and what you keep. Itemized fees, net proceeds, profit, margin, ROI and break-even price for Etsy, eBay, Amazon FBA, Poshmark, Depop, Shopify or any custom platform.</p>
   </section>
 
   <div class="app" id="calculator">
@@ -71,6 +74,9 @@
               <option value="etsy" selected>Etsy</option>
               <option value="ebay">eBay</option>
               <option value="amazon">Amazon FBA</option>
+              <option value="poshmark">Poshmark</option>
+              <option value="depop">Depop</option>
+              <option value="shopify">Shopify</option>
               <option value="custom">Custom / other</option>
             </select>
           </div>
@@ -115,7 +121,7 @@
   <section class="cta" id="pro">
     <div>
       <h3>Pricing lots of products?</h3>
-      <p>FeeScope Pro is an offline batch console for sellers: import a CSV of products, apply marketplace fee rules in bulk, compare profit across Etsy / eBay / Amazon, get break-even pricing suggestions and export a clean profit sheet.</p>
+      <p>FeeScope Pro is an offline batch console for sellers: import a CSV of products, apply marketplace fee rules in bulk, compare profit across Etsy / eBay / Amazon / Poshmark / Depop / Shopify, get break-even pricing suggestions and export a clean profit sheet.</p>
     </div>
     <a class="btn" href="#pro" data-gumroad>Get FeeScope Pro →</a>
   </section>
@@ -146,6 +152,9 @@
           <tr><td>Etsy</td><td>6.5% transaction + ~3% processing</td><td>$0.20 listing, $0.25 processing</td><td>Offsite ads 12–15% when attributed</td></tr>
           <tr><td>eBay</td><td>~13.25% final value fee</td><td>$0.30 per order</td><td>Optional store subscription</td></tr>
           <tr><td>Amazon FBA</td><td>15% referral</td><td>$0.30 referral minimum</td><td>Per-unit fulfillment + storage</td></tr>
+          <tr><td>Poshmark</td><td>20% commission</td><td>$2.95 flat under $15</td><td>Commission is on the item price; buyer pays shipping</td></tr>
+          <tr><td>Depop</td><td>10% selling + ~3.3% processing</td><td>$0.45 processing</td><td>Selling fee is on item + shipping</td></tr>
+          <tr><td>Shopify</td><td>~2.9% payment processing</td><td>$0.30 per order</td><td>Add 0.5–2% if using a non-Shopify gateway</td></tr>
           <tr><td>Custom</td><td>Your rate</td><td>Your fixed fee</td><td>Any other processor/platform</td></tr>
         </tbody>
       </table>
@@ -164,6 +173,9 @@
     <details><summary>How much does Etsy take per sale?</summary><p>Etsy generally charges a $0.20 listing fee, a 6.5% transaction fee on the item price plus shipping charged, and payment processing of roughly 3% + $0.25 per order in the US. Offsite ads can add 12–15% on attributed orders. Rates vary by country and plan, so verify in your Etsy account.</p></details>
     <details><summary>What is eBay's final value fee?</summary><p>For many categories eBay's final value fee is about 13.25% of the item price plus shipping, with a fixed $0.30 per-order fee. The exact rate depends on the category, seller level and store subscription.</p></details>
     <details><summary>How much does Amazon FBA cost per unit?</summary><p>Amazon FBA typically charges a 15% referral fee on the total sales price (minimum about $0.30 per item), a per-unit fulfillment fee that depends on size and weight, and a per-unit monthly storage fee. Plug your exact size tier into the calculator.</p></details>
+    <details><summary>How much does Poshmark take per sale?</summary><p>Poshmark charges a 20% commission on sales of $15 or more, and a flat $2.95 on sales under $15. The commission is based on the item sale price; shipping is paid by the buyer, so it is not part of the fee base.</p></details>
+    <details><summary>What are Depop's selling fees?</summary><p>Depop's U.S. selling fee is about 10% of the item price plus shipping charged, with payment processing of roughly 3.3% + $0.45 per order. Rates and payment providers vary by country.</p></details>
+    <details><summary>What fees does Shopify charge on a sale?</summary><p>Shopify itself does not take a cut of each sale, but payment processing on the Basic plan is roughly 2.9% + $0.30 per online order with Shopify Payments. If you use a third-party gateway, add your plan's third-party transaction fee (0.5–2%).</p></details>
     <details><summary>How do I calculate break-even price?</summary><p>Break-even price is the sale price at which profit is exactly zero after all fees, item cost and shipping. Because percentage fees depend on the price, FeeScope solves it numerically and shows it in the results.</p></details>
     <details><summary>Is my data stored anywhere?</summary><p>No. Everything runs in your browser. Nothing is uploaded, and your inputs only live in the page URL if you copy a share link.</p></details>
 

@@ -55,6 +55,32 @@ close(c.totalFees, 2.80, 1e-9, 'custom total fees = 10% + 0.30');
 close(c.profit, 10.20, 1e-9, 'custom profit');
 close(c.breakEvenPrice, 12.30 / 0.90, 1e-6, 'custom break-even price');
 
+// ── Poshmark: 20% of item price at/above $15, flat $2.95 below ────────────────
+const p = computeFees({ ...ETSY, marketplace: 'poshmark' });
+close(p.totalFees, 5.00, 1e-9, 'poshmark commission = 20% of item price');
+close(p.profit, 8.00, 1e-9, 'poshmark profit');
+close(p.breakEvenPrice, 14.95, 1e-6, 'poshmark break-even price (flat $2.95 tier applies below $15)');
+close(p.fees.find(f => f.key === 'commission').amount, 5.00, 1e-9, 'poshmark commission line');
+const pSmall = computeFees({ ...ETSY, marketplace: 'poshmark', salePrice: 10 });
+close(pSmall.fees.find(f => f.key === 'commission').amount, 2.95, 1e-9, 'poshmark flat $2.95 under $15');
+// Poshmark commission ignores shipping (buyer pays it separately)
+const pShip = computeFees({ ...ETSY, marketplace: 'poshmark', shippingCharged: 8 });
+close(pShip.fees.find(f => f.key === 'commission').amount, 5.00, 1e-9, 'poshmark commission is on item price, not shipping');
+
+// ── Depop: 10% selling fee + ~3.3% + $0.45 processing ────────────────────────
+const d = computeFees({ ...ETSY, marketplace: 'depop' });
+close(d.totalFees, 3.775, 1e-9, 'depop total fees = 10% + 3.3% + 0.45');
+close(d.profit, 9.225, 1e-9, 'depop profit');
+close(d.breakEvenPrice, 12.45 / 0.867, 1e-6, 'depop break-even price');
+
+// ── Shopify: payment processing ~2.9% + $0.30, optional gateway fee ──────────
+const s = computeFees({ ...ETSY, marketplace: 'shopify' });
+close(s.totalFees, 1.025, 1e-9, 'shopify processing = 2.9% + 0.30');
+close(s.profit, 11.975, 1e-9, 'shopify profit');
+close(s.breakEvenPrice, 12.30 / 0.971, 1e-6, 'shopify break-even price');
+const sTp = computeFees({ ...ETSY, marketplace: 'shopify', config: { thirdPartyPct: 2 } });
+close(sTp.totalFees, 1.525, 1e-9, 'shopify third-party gateway fee adds 2%');
+
 // ── Shipping charged raises revenue and percentage fees ─────────────────────
 const ship = computeFees({ ...ETSY, shippingCharged: 5 });
 close(ship.grossRevenue, 30, 1e-9, 'shipping charged added to revenue');
@@ -99,7 +125,7 @@ d1.paymentFixed = 99;
 ok('defaultConfig returns an isolated copy', defaultConfig('etsy').paymentFixed === 0.25);
 ok('all marketplace defaults are present',
   Object.keys(MARKETPLACES).every(k => defaultConfig(k) && Object.keys(defaultConfig(k)).length > 0));
-ok('all built-in marketplaces compute', ['etsy', 'ebay', 'amazon', 'custom']
+ok('all built-in marketplaces compute', ['etsy', 'ebay', 'amazon', 'poshmark', 'depop', 'shopify', 'custom']
   .every(m => Number.isFinite(computeFees({ ...ETSY, marketplace: m }).profit)));
 ok('unknown marketplace falls back to custom', computeFees({ ...ETSY, marketplace: 'nope' }).marketplace === 'custom');
 
